@@ -1,0 +1,27 @@
+{
+  "name": "hotp-rfc4226-demo",
+  "version": "1.0.0",
+  "description": "HOTP RFC4226 demo application backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hotp",
+    "rfc4226",
+    "2fa",
+    "authentication"
+  ],
+  "author": "Kyaw Soe",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "qrcode": "^1.5.4",
+    "speakeasy": "^2.0.0"
+  }
+}
