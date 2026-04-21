@@ -1,5 +1,5 @@
 {
-  "name": "hotp-rfc4226-demo",
+  "name": "hotp-rfc4226-demo-backend",
   "version": "1.0.0",
   "description": "HOTP RFC4226 demo application backend",
   "main": "app.js",
