@@ -37,7 +37,7 @@ router.post('/verify-2fa', (req, res) => {
   }
 
   const counter = device.counter || 0;
-  const valid = otpService.verifyHOTP(token, device.secret, counter);
+  const valid = otpService.verifyHOTP(token, device.secret, counter, 10);
 
   if (!valid) {
     return res.status(401).json({ error: 'Invalid OTP token' });
@@ -116,9 +116,7 @@ router.post('/add-device', async (req, res) => {
 router.post('/confirm-device', (req, res) => {
   const { username, deviceId, token } = req.body;
 
-  const device = userStore.getDevice(username, deviceId);
-  console.log(device, "confirm device");
-  
+  const device = userStore.getDevice(username, deviceId);  
   
   if (!device) {
     return res.status(404).json({ error: 'Device not found' });
@@ -127,27 +125,15 @@ router.post('/confirm-device', (req, res) => {
   const counter = device.counter || 0;
   console.log(counter, "confirm counter");
   
-  let valid = otpService.verifyHOTP(token, device.secret, counter);
-  let usedCounter = counter;
+  let valid = otpService.verifyHOTP(token, device.secret, counter, 10);
 
   console.log(valid, "valid");
-  
-  if (!valid) {
-    for (let i = 1; i <= 10; i++) {
-      valid = otpService.verifyHOTP(token, device.secret, counter + i);
-      console.log(valid, `valid with counter+${i}`);
-      if (valid) {
-        usedCounter = counter + i;
-        break;
-      }
-    }
-  }
   
   if (!valid) {
     return res.status(401).json({ error: 'Invalid OTP token' });
   }
 
-  userStore.setCounter(username, deviceId, usedCounter + 1);
+  userStore.setCounter(username, deviceId, counter + 1);
   device.confirmed = true;
   res.json({ success: true, device });
 });

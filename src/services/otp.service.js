@@ -34,23 +34,20 @@ class OTPService {
     return speakeasy.hotp({
       secret: base32,
       counter,
-      encoding: 'base32',
     });
   }
 
-  verifyHOTP(token, base32, counter) {
+  verifyHOTP(token, base32, counter, window = 0) {
     const expected = speakeasy.hotp({
       secret: base32,
       counter,
-      encoding: 'base32',
     });
     console.log('Expected:', expected, 'Got:', token);
     return speakeasy.hotp.verify({
       secret: base32,
       counter,
-      encoding: 'base32',
       token,
-      window: 1,
+      window,
     });
   }
 

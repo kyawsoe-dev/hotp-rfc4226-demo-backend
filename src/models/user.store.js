@@ -18,9 +18,7 @@ class UserStore {
     return user && user.devices.length > 0;
   }
 
-  addDevice(username, device) {
-    console.log(device, "add device");
-    
+  addDevice(username, device) {    
     if (!users[username]) return null;
     users[username].devices.push(device);
     
